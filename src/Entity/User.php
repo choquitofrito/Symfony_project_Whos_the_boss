@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,6 +33,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cotation::class)]
+    private Collection $cotation;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Avis::class)]
+    private Collection $avis;
+
     //constructeur et hydrate
 
     public function hydrate (array $vals){
@@ -46,6 +54,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct(array $init)
     {
         $this->hydrate($init);
+        $this->cotation = new ArrayCollection();
+        $this->avis = new ArrayCollection();
     }
 
 
@@ -128,6 +138,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cotation>
+     */
+    public function getCotation(): Collection
+    {
+        return $this->cotation;
+    }
+
+    public function addCotation(Cotation $cotation): static
+    {
+        if (!$this->cotation->contains($cotation)) {
+            $this->cotation->add($cotation);
+            $cotation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCotation(Cotation $cotation): static
+    {
+        if ($this->cotation->removeElement($cotation)) {
+            // set the owning side to null (unless already changed)
+            if ($cotation->getUser() === $this) {
+                $cotation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): static
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis->add($avi);
+            $avi->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): static
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getUser() === $this) {
+                $avi->setUser(null);
+            }
+        }
 
         return $this;
     }
