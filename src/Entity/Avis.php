@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\AvisRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AvisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: AvisRepository::class)]
 class Avis
@@ -25,6 +26,26 @@ class Avis
 
     #[ORM\ManyToOne(inversedBy: 'avis')]
     private ?Entreprise $entreprise = null;
+
+        //constructeur et hydrate
+
+        public function hydrate (array $vals){
+            foreach ($vals as $cle => $valeur){
+                if (isset ($vals[$cle])){
+                    $nomSet = "set" . ucfirst($cle);
+                    $this->$nomSet ($valeur);
+                }
+            }
+        }
+    
+        
+        public function __construct(array $init)
+        {
+            $this->hydrate($init);
+            $this->user = new ArrayCollection();
+            $this->entreprise = new ArrayCollection();
+        }
+
 
     public function getId(): ?int
     {
