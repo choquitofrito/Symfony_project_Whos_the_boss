@@ -27,9 +27,21 @@ class Cotation
     #[ORM\ManyToMany(targetEntity: Critere::class, mappedBy: 'cotation')]
     private Collection $criteres;
 
-    public function __construct()
+    public function hydrate (array $vals){
+        foreach ($vals as $cle => $valeur){
+            if (isset ($vals[$cle])){
+                $nomSet = "set" . ucfirst($cle);
+                $this->$nomSet ($valeur);
+            }
+        }
+    }
+    
+    public function __construct(array $init)
     {
+        $this->hydrate($init);
         $this->criteres = new ArrayCollection();
+        // $this->entreprise = new ArrayCollection();
+        // $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int

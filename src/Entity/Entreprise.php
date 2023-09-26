@@ -33,11 +33,24 @@ class Entreprise
     #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Avis::class)]
     private Collection $avis;
 
-    public function __construct()
-    {
-        $this->cotation = new ArrayCollection();
-        $this->avis = new ArrayCollection();
-    }
+        //constructeur et hydrate
+
+        public function hydrate (array $vals){
+            foreach ($vals as $cle => $valeur){
+                if (isset ($vals[$cle])){
+                    $nomSet = "set" . ucfirst($cle);
+                    $this->$nomSet ($valeur);
+                }
+            }
+        }
+        
+        public function __construct(array $init)
+        {
+            $this->hydrate($init);
+            $this->cotation = new ArrayCollection();
+            $this->avis = new ArrayCollection();
+        }
+
 
     public function getId(): ?int
     {
