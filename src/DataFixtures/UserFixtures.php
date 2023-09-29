@@ -22,16 +22,16 @@ class UserFixtures extends Fixture
 
         for ($i = 0; $i < 10; $i++) {
 
+            //fixer un password sans hasher 
+            $passwordSansHash = "monpassword" . $i;
             
             $user = new User([
                 'email' => 'user' . $i . '@gmail.com',
                 'roles' => [],
                 'nom' => $faker->name(),
-                'password' => 'monpass'
+                'password' => $passwordSansHash
             ]);
             
-            //fixer un password sans hasher 
-            $passwordSansHash = "monpassword" . $i;
 
             //obtenir le password hashé
             $passwordHash = $this->passwordHasher->hashPassword(

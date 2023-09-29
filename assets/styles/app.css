@@ -1,3 +1,9 @@
 body {
     background-color: lightgray;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 70%;
+}
+
+.navbar-brand {
+    font-size: 130%;
 }

@@ -14,13 +14,17 @@
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
+
+        {# Import FontAwesome #}
+        <script src="https://kit.fontawesome.com/f2a558dcb6.js" crossorigin="anonymous"></script>
+
 	</head>
 	<body>
-{# MENU NAVIGATION #}
+		{# MENU NAVIGATION #}
 
 		<nav class="navbar navbar-expand-lg bg-body-tertiary">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Who's The Boss?</a>
+				<a class="navbar-brand" href="{{ path ("home") }}">Who's The Boss?</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -28,17 +32,16 @@
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="{{ path ("entreprises") }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Entreprises
 							</a>
 							<ul class="dropdown-menu">
 								<li>
-									<a class="dropdown-item" href="#TOCHANGE">Chercher une Entreprise</a>
+									<a class="dropdown-item" href="{{ path ("entreprises") }}">Chercher une Entreprise</a>
 								</li>
 								<li>
 									<a class="dropdown-item" href="#TOCHANGE">Créer une Entreprise</a>
 								</li>
-								<li><hr class="dropdown-divider"></li>
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -46,25 +49,27 @@
 						</li>
 
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="{{ path ('app_login') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Espace Personnel
 							</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
-							</li>
-							<li><hr class="dropdown-divider"></li>
-						</ul>
-					</li>
-				</ul>
+							<ul class="dropdown-menu">
+								{% if app.user %}
+									<li class="dropdown-item"><b>{{app.user.nom}}</b></li>
+								{% endif %}
+
+                                <hr>
+
+								<li>
+									<a class="dropdown-item" href="{{ path ('app_login') }}">Se connecter</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{ path ('app_logout') }}">Se déconnecter</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
-		</div>
-
-
-
-        
+		</body>
 	</body>
 </html></nav>{% block body %}{% endblock %}</body></html>
