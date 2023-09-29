@@ -23,7 +23,7 @@ class AvisFixtures extends Fixture
         if (!empty($users) && !empty($entreprises)) {
             // Créez des avis en associant aléatoirement des utilisateurs et des entreprises
             for ($i = 1; $i <= 10; $i++) {
-                
+
                 $user = $users[array_rand($users)]; // Sélectionnez un utilisateur aléatoire
                 $entreprise = $entreprises[array_rand($entreprises)]; // Sélectionnez une entreprise aléatoire
 
@@ -40,8 +40,7 @@ class AvisFixtures extends Fixture
                 $manager->persist($avis);
             }
         } else {
-            // Gérez le cas où les tableaux sont vides (par exemple, affichez un message d'erreur)
-            // ...
+            echo("Non-existant");
         }
 
         $manager->flush();
