@@ -1,5 +1,5 @@
 body {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     font-family: 'Unbounded', sans-serif;
     font-size: 70%;
 }
@@ -14,10 +14,24 @@ body {
 
 .button-home-entreprise-fixed {
     position: absolute;
-    top: 70%; /* Position verticale*/
-    left: 90%; /* Position horizontale*/
+    top: 75%; 
+    left: 75%; 
 }
 
-.abc {
-    font-size: 200%;
+
+.top3-accueil {
+    width : "30%";
+    padding: 3%;
+}
+
+.bouton-accueil {
+    position: absolute;
+    top: 50%; 
+    left: 40%; 
+    transform: translate(-50%, -50%);
+    padding: 20px 78px;
+    background-color: transparent;
+    border-radius: 1em;
+    border: none;
+    cursor: pointer;
 }
