@@ -1,45 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Se connecter{% endblock %}
+{% block title %}Se connecter
+{% endblock %}
 
 {% block body %}
 
-<div class="conteneur">
-	<img src={{ '/images/img_login.png' }} width="100%">
-	<div class="button-home-entreprise-fixed">
-		<img src={{ '/images/bouton_rechercher_noter_accueil.png' }} alt="Rechercher et Noter des Entreprises" width = "75%">
-        <a class="bouton-accueil" href={{ path ("entreprises") }}></a> 
-    </div>
-</div>
+		<form method="post">
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
 
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            Bienvenue {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}"><br>Se déconnecter</a>
-        </div>
-    {% endif %}
+	<div class="conteneur">
+		<img src={{ '/images/img_login.png' }} width="100%">
 
-    <h2 class="h3 mb-3 font-weight-normal">Se connecter à votre <br>Espace Personnel</h2>
-    <div class="inputLogin">
-        <br><label for="inputEmail">Email</label>
-        <br><input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-        <br><label for="inputPassword">Password</label>
-        <br><input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+			<div class="box-login">
+				<h4 class="h4-se-connecter">Se connecter à votre
+					<strong><br>Espace Personnel</h4></strong>
+                    <hr>
 
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}">
-    </div>      
+				{# Welcome User Name message + deconnexion button #}
+				{% if app.user %}
+					<div class="mb-3">
+						Bienvenue
+						{{ app.user.userIdentifier }},
+						<a href="{{ path('app_logout') }}"><br>Se déconnecter</a>
+					</div>
+				{% endif %}
 
-    <br><br><button class="btn btn-lg btn-primary" type="submit">
-        Connexion
-    </button>
-    <button class="btn btn-lg btn-primary" type="submit">
-        Créer un compte
-    </button>
 
-</form>
+				<div class="input-login">
+					<br><label for="inputEmail">Email</label>
+					<br><input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+					<br><label for="inputPassword">Password</label>
+					<br><input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				</div>
+
+				<br><br><button class="btn btn-lg btn-primary" type="submit">
+					Connexion
+				</button>
+				<button class="btn btn-lg btn-primary" type="submit">
+					Créer un compte
+				</button>
+			</div>
+
+
+	</div>
+
+	</form>
 {% endblock %}

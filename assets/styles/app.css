@@ -35,3 +35,24 @@ body {
     border: none;
     cursor: pointer;
 }
+
+.box-login {
+    position: absolute;
+    background-color: azure;
+    border-radius: 2em;
+    padding: 4%;
+    top: 10%; 
+    left: 10%; 
+    width: 30%;
+}
+
+.input-login, .btn {
+    font-size: 7pt;
+}
+
+.h4-se-connecter {
+    padding-right: 2%;
+    padding-left: 2%;
+    font-size: 12pt;
+    text-align: center;
+}
