@@ -1,11 +1,26 @@
 {% extends "base.html.twig" %}
 
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
+
 
 {% block body %}
 
-<img src = {{ '/images/img_accueil.png' }} width= "100%">
+	<div class="conteneur">
+		<img src={{ '/images/img_accueil.png' }} width="100%">
+		<div class="button-home-entreprise-fixed">
+			<img src={{ '/images/bouton_rechercher_noter_accueil.png' }} alt="Rechercher et Noter des Entreprises" width = "75%">
+            <a class="bouton-accueil" href={{ path ("entreprises") }}></a> 
+        </div>
+	</div>
+
+
+    <div class="top3-accueil">
+		<img src={{ '/images/top3-accueil.png' }} width="30%">
+    </div>
+
+    {# INTEGRER LES 3 MEILLEURES ENTREPRISES ICI #}
 
 
 

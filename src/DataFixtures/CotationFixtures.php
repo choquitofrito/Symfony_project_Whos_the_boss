@@ -8,9 +8,11 @@ use App\Entity\User;
 // use App\Entity\Entreprise;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+// use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class CotationFixtures extends Fixture
+class CotationFixtures extends Fixture 
+// implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -40,4 +42,12 @@ class CotationFixtures extends Fixture
     
         $manager->flush();
     }
+
+// public function getDependencies()
+//     {
+//         return ([
+//             EntrepriseFixtures::class,
+//             UserFixtures::class
+//         ]);
+//     }
 }

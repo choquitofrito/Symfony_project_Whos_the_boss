@@ -1,9 +1,23 @@
 body {
-    background-color: lightgray;
+    background-color: white;
     font-family: 'Unbounded', sans-serif;
     font-size: 70%;
 }
 
 .navbar-brand {
     font-size: 130%;
+}
+
+.conteneur {
+    position: relative;
+}
+
+.button-home-entreprise-fixed {
+    position: absolute;
+    top: 70%; /* Position verticale*/
+    left: 90%; /* Position horizontale*/
+}
+
+.abc {
+    font-size: 200%;
 }
