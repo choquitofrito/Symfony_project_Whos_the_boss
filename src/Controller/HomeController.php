@@ -24,8 +24,8 @@ class HomeController extends AbstractController{
         return $this->render ('home/classement.html.twig');
     }
 
-    #[Route('/vue3', name:'vue3')]
-    public function vue3 (): Response {
-        return $this->render ('home/vue3.html.twig');
+    #[Route('/creation', name:'creation')]
+    public function creation (): Response {
+        return $this->render ('home/creation.html.twig');
     }
 }
