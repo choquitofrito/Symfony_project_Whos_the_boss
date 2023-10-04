@@ -19,11 +19,11 @@ class Cotation
     private ?int $note = null;
 
     #[ORM\ManyToOne(inversedBy: 'cotation')]
-    // #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'cotation')]
-    // #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Entreprise $entreprise = null;
 
     #[ORM\ManyToMany(targetEntity: Critere::class, mappedBy: 'cotation')]

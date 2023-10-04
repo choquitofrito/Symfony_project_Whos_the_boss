@@ -33,6 +33,9 @@ class Entreprise
     #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Avis::class)]
     private Collection $avis;
 
+    #[ORM\Column(length: 800)]
+    private ?string $description = null;
+
         //constructeur et hydrate
 
         public function hydrate (array $vals){
@@ -161,6 +164,18 @@ class Entreprise
                 $avi->setEntreprise(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

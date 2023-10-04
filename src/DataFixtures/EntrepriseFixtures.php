@@ -15,7 +15,6 @@ class EntrepriseFixtures extends Fixture
 
         $arraySecteur = ['Agroalimentaire', 'Banque/Assurance', 'Bois/Papier/Imprimerie', 'BTP', 'Chimie', 'Commerce/Distribution', 'Édition/Communication', 'Electronique', 'Études et Conseils', 'Industrie pharmaceutique', 'Informatique', 'Équipements/Automobile', 'Metallurgie', 'Plastique', 'Services', 'Textile', 'Transport/Logistique'];
 
-        // Créez plusieurs entreprises fictives
         for ($i = 0; $i < 10; $i++) {
 
             $randomSecteurIndex = mt_rand(0, count($arraySecteur)-1);
@@ -25,7 +24,8 @@ class EntrepriseFixtures extends Fixture
                 'nom' => $faker->company,
                 'secteur' => $randomSecteur,
                 'emplacement' => $faker->address,
-                'image' => $faker->imageUrl
+                'image' => $faker->imageUrl,
+                'description' => $faker->realText()
             ]);
 
             $manager->persist($entreprise);

@@ -2,17 +2,17 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Cotation;
-use App\Entity\Critere;
 use App\Entity\User;
-// use App\Entity\Entreprise;
+use App\Entity\Critere;
+use App\Entity\Cotation;
+use App\Entity\Entreprise;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-// use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class CotationFixtures extends Fixture 
-// implements DependentFixtureInterface
+implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -23,31 +23,39 @@ class CotationFixtures extends Fixture
         $repUsers = $manager->getRepository(User::class);
         $arrayUsers = $repUsers->findAll();
 
+        $repEntreprise = $manager->getRepository(Entreprise::class);
+        $arrayEntreprises = $repEntreprise->findAll();
+
 
         for ($i = 0; $i < 10; $i++) {
-            // Générez des valeurs aléatoires
-            $randomUser = $repUsers->find(rand(1, $repUsers->count($arrayUsers)));
-            $randomCritere = $repCriteres->find(rand(1, $repCriteres->count($arrayCriteres)));
+            // valeurs aléatoires
+            $randomUser = $arrayUsers[array_rand($arrayUsers)];
+            $randomEntreprise = $arrayEntreprises[array_rand($arrayEntreprises)];
+            $randomCritere = $arrayCriteres[array_rand($arrayCriteres)];
             
             $randomNote = rand(0, 5);
     
             $cotation = new Cotation([
                 'note' => $randomNote,
-                'user' => $randomUser,
-                'critere' => $randomCritere,
             ]);
-    
+
             $manager->persist($cotation);
+
+            $randomCritere->addCotation($cotation);
+            $randomEntreprise->addCotation($cotation);
+            $randomUser->addCotation($cotation);
+            
         }
     
         $manager->flush();
     }
 
-// public function getDependencies()
-//     {
-//         return ([
-//             EntrepriseFixtures::class,
-//             UserFixtures::class
-//         ]);
-//     }
+public function getDependencies()
+    {
+        return ([
+            EntrepriseFixtures::class,
+            UserFixtures::class,
+            CritereFixtures::class
+        ]);
+    }
 }

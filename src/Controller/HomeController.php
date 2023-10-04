@@ -13,12 +13,6 @@ class HomeController extends AbstractController{
         return $this->render ('home/accueil.html.twig');
     }
 
-
-    #[Route('/entreprises', name:'entreprises')]
-    public function entreprises (): Response {
-        return $this->render ('home/entreprises.html.twig');
-    }
-
     #[Route('/classement', name:'classement')]
     public function classement (): Response {
         return $this->render ('home/classement.html.twig');
@@ -26,6 +20,11 @@ class HomeController extends AbstractController{
 
     #[Route('/creation', name:'creation')]
     public function creation (): Response {
-        return $this->render ('home/creation.html.twig');
+        return $this->render ('creation_entreprise/creation.html.twig');
+    }
+
+    #[Route('/entreprise/search', name:'entreprise')]
+    public function entreprise (): Response {
+        return $this->render ('search/entreprises.html.twig');
     }
 }

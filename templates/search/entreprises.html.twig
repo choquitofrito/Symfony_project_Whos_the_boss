@@ -1,0 +1,74 @@
+{% extends "base.html.twig" %}
+
+	{% block body %}
+		<h1>
+	Cherchez, créez, notez votre entreprise
+	</h1>
+
+	<hr>
+
+		<form method="get" action="{{ path('search') }}">
+        <label for="emplacement">Emplacement:</label>
+        <input type="text" id="emplacement" name="emplacement" value="{{ app.request.query.get('emplacement') }}" />
+
+        <label for="secteur">Secteur:</label>
+        <input type="text" id="secteur" name="secteur" value="{{ app.request.query.get('secteur') }}" />
+
+        <label for="cotation">Cotation:</label>
+        <input type="text" id="cotation" name="cotation" value="{{ app.request.query.get('cotation.note') }}" />
+
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Emplacement</th>
+                <th>Secteur</th>
+                <th>Cotation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entreprise in results %}
+                <tr>
+                    <td>{{ entreprise.nom }}</td>
+                    <td>{{ entreprise.emplacement }}</td>
+                    <td>{{ entreprise.secteur }}</td>
+                    <td>{{ entreprise.cotation }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<hr>
+
+{% endblock %}
+
+{# NAVBAR BOOTSTRAP #}
+
+{# <nav class="navbar navbar-expand-lg bg-body-tertiary"> 
+		<div class="container-fluid">
+			<a class="navbar-brand"><span>Trier par </span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+					<li class="nav-item" method="get" action="{{ path('search') }}>
+						<a class="nav-link active" aria-current="page" href="{{ app.request.query.get('emplacement') }}">Lieu</a>
+					</li>
+					<li class="nav-item" method="get" action="{{ path('search') }}>
+						<a class="nav-link" href="{{ app.request.query.get('secteur') }}">Secteur</a>
+					</li>
+					<li class="nav-item" method="get" action="{{ path('search') }}>
+						<a class="nav-link" href="{{ app.request.query.get('cotation') }}">Meilleures Notes</a>
+					</li>
+				</ul>
+			<form class="d-flex" role="search">
+				<input class="form-control me-2" type="search" placeholder="Rechercher une Entreprise" aria-label="Search">
+				<button class="btn btn-outline-success" type="submit">Rechercher</button>
+			</form>
+		</div>
+	</div>
+</nav> #}
