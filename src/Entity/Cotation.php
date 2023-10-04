@@ -41,9 +41,8 @@ class Cotation
     public function __construct(array $init)
     {
         $this->hydrate($init);
-        $this->criteres = new ArrayCollection();
-        // $this->entreprise = new ArrayCollection();
-        // $this->user = new ArrayCollection();
+
+
     }
 
     public function getId(): ?int

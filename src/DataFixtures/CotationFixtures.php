@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
-class CotationFixtures extends Fixture 
+class CotationFixtures extends Fixture
 implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
@@ -32,9 +32,9 @@ implements DependentFixtureInterface
             $randomUser = $arrayUsers[array_rand($arrayUsers)];
             $randomEntreprise = $arrayEntreprises[array_rand($arrayEntreprises)];
             $randomCritere = $arrayCriteres[array_rand($arrayCriteres)];
-            
+
             $randomNote = rand(0, 5);
-    
+
             $cotation = new Cotation([
                 'note' => $randomNote,
             ]);
@@ -44,13 +44,12 @@ implements DependentFixtureInterface
             $randomCritere->addCotation($cotation);
             $randomEntreprise->addCotation($cotation);
             $randomUser->addCotation($cotation);
-            
         }
-    
+
         $manager->flush();
     }
 
-public function getDependencies()
+    public function getDependencies()
     {
         return ([
             EntrepriseFixtures::class,

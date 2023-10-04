@@ -42,8 +42,7 @@ class Avis
         public function __construct(array $init)
         {
             $this->hydrate($init);
-            $this->user = new ArrayCollection();
-            $this->entreprise = new ArrayCollection();
+
         }
 
 
