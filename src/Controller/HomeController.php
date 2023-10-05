@@ -20,11 +20,11 @@ class HomeController extends AbstractController{
 
     #[Route('/creation', name:'creation')]
     public function creation (): Response {
-        return $this->render ('creation_entreprise/creation.html.twig');
+        return $this->render ('entreprises/creation.html.twig');
     }
 
-    #[Route('/entreprise/search', name:'entreprise')]
+    #[Route('/entreprises', name:'entreprises')]
     public function entreprise (): Response {
-        return $this->render ('search/entreprises.html.twig');
+        return $this->render ('entreprises/entreprises_liste.html.twig');
     }
 }

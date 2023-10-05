@@ -1,47 +1,11 @@
 {% extends "base.html.twig" %}
 
 	{% block body %}
-		<h1>
-	Cherchez, créez, notez votre entreprise
-	</h1>
+	<h1>Cherchez, créez, notez votre entreprise</h1>
 
 	<hr>
 
-		<form method="get">
-        <label for="emplacement">Emplacement:</label>
-        <input type="text" id="emplacement" name="emplacement" value="{{ app.request.query.get('emplacement') }}" />
-
-        <label for="secteur">Secteur:</label>
-        <input type="text" id="secteur" name="secteur" value="{{ app.request.query.get('secteur') }}" />
-
-        <label for="cotation">Cotation:</label>
-        <input type="text" id="cotation" name="cotation" value="{{ app.request.query.get('cotation.note') }}" />
-
-        <button type="submit">Rechercher</button>
-    </form>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Emplacement</th>
-                <th>Secteur</th>
-                <th>Cotation</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entreprise in results %}
-                <tr>
-                    <td>{{ entreprise.nom }}</td>
-                    <td>{{ entreprise.emplacement }}</td>
-                    <td>{{ entreprise.secteur }}</td>
-                    <td>{{ entreprise.cotation }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-<hr>
+	<hr>
 
 {% endblock %}
 
