@@ -190,7 +190,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeAvi(Avis $avis): static
+    public function removeAvis(Avis $avis): static
     {
         if ($this->avis->removeElement($avis)) {
             // set the owning side to null (unless already changed)

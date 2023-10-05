@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CreationEntrepriseController extends AbstractController
 {
     #[Route('/creation/entreprise', name: 'creation_entreprise')]
-    public function creationEntreprise()
+    public function creationEntreprise(Request $req, ManagerRegistry $doctrine)
     {
-        // on crée le formulaire du type souhaité
-        $creationEntreprise = $this->createForm(CreationType::class);
+        $creationEntreprise = new CreationEntreprise();
+        $form = $this->createForm(creationEntreprise::class, $creationEntreprise);
 
-        // on envoie un objet FormView à la vue pour qu'elle puisse 
-        // faire le rendu, pas le formulaire en soi
-        $vars = ['unFormulaire' => $creationEntreprise];
+        $form->handleRequest($req);
 
-        return $this->render('/creation_entreprise/creation.html.twig', $vars);
+        if ($this->getUser()) {
+            
+        }
     }
 }

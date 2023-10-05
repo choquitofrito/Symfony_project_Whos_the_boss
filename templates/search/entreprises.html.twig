@@ -7,7 +7,7 @@
 
 	<hr>
 
-		<form method="get" action="{{ path('search') }}">
+		<form method="get">
         <label for="emplacement">Emplacement:</label>
         <input type="text" id="emplacement" name="emplacement" value="{{ app.request.query.get('emplacement') }}" />
 
