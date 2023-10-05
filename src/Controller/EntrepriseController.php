@@ -20,21 +20,3 @@ class EntrepriseController extends AbstractController {
     }
 }
 
-
-
-
-
-
-
-// {
-//     #[Route('/entreprises', name: 'app_entreprise')]
-//     public function listEntreprises(EntityManagerInterface $entityManager): Response
-//     {
-//         $entreprises = $entityManager->getRepository(Entreprise::class)->findAll();
-
-
-//         return $this->render('entreprises/entreprises_liste.html.twig', [
-//             'entreprisesListe' => $entreprises
-//         ]);
-//     }
-// }

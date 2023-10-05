@@ -1,44 +1,30 @@
 {% extends "base.html.twig" %}
 
-	{% block body %}
+{% block body %}
 	<h1>Cherchez, créez, notez votre entreprise</h1>
 
 	<hr>
 	{# NAVBAR ICI #}
 	<hr>
 
-
 	{% for entreprise in entrepriseListe %}
-    <br>Nom: {{ entreprise.nom }} 
-    <br>Secteur: {{ entreprise.secteur }} 
+		<div class="row row-cols-1 row-cols-md-3 g-4">
+			<div class="col">
+				<div class="card h-100">
+					<a href={{ path ('entreprises', {'id': entreprise.id} ) }}>
+						<img src="{{ asset (entreprise.image) }}" class="card-img-top" alt="logo entreprise">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title">
+							<b>{{ entreprise.nom }}</b>
+						</h5>
+						<p class="card-text">Secteur : <b>{{ entreprise.secteur }}</b>
+							<br>
+							{{ entreprise.description }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	{% endfor %}
 
 {% endblock %}
-
-{# NAVBAR BOOTSTRAP #}
-
-{# <nav class="navbar navbar-expand-lg bg-body-tertiary"> 
-		<div class="container-fluid">
-			<a class="navbar-brand"><span>Trier par </span></a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0" >
-					<li class="nav-item" method="get" action="{{ path('search') }}>
-						<a class="nav-link active" aria-current="page" href="{{ app.request.query.get('emplacement') }}">Lieu</a>
-					</li>
-					<li class="nav-item" method="get" action="{{ path('search') }}>
-						<a class="nav-link" href="{{ app.request.query.get('secteur') }}">Secteur</a>
-					</li>
-					<li class="nav-item" method="get" action="{{ path('search') }}>
-						<a class="nav-link" href="{{ app.request.query.get('cotation') }}">Meilleures Notes</a>
-					</li>
-				</ul>
-			<form class="d-flex" role="search">
-				<input class="form-control me-2" type="search" placeholder="Rechercher une Entreprise" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Rechercher</button>
-			</form>
-		</div>
-	</div>
-</nav> #}

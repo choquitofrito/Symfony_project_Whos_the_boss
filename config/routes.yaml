@@ -5,7 +5,4 @@ controllers:
     type: attribute
 
 
-# entreprise_list:
-#     path: '/entreprises'
-#     controller: App\Controller\EntrepriseController::entreprisesListe
 
