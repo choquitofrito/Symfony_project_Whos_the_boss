@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Avis;
 use App\Entity\Entreprise;
+use App\Form\AvisType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,12 +65,37 @@ class EntrepriseController extends AbstractController
     public function noterEntreprise(Request $request, ManagerRegistry $doctrine)
     {
         $avisEntreprise = new Avis();
-        $formulaireNote = $this->createForm(Avis::class, $avisEntreprise);
+        $formulaireNote = $this->createForm(AvisType::class, $avisEntreprise);
         $formulaireNote->handleRequest($request);
 
+        // obtenir l'User et l'Entreprise
+        $idEntreprise = $request->get('id');
+        $em = $doctrine->getManager();
+        $rep = $em->getRepository(Entreprise::class);
+        $entreprise = $rep->find($idEntreprise);
+
+        $user = $this->getUser();
+        
         if ($formulaireNote->isSubmitted() && $formulaireNote->isValid()){
-            
+
+            // fixer User et Entreprise
+            $avisEntreprise->setUser($user);
+            $avisEntreprise->setEntreprise($entreprise);
+
+            // stocker l'avis complet
+            $em->persist($avisEntreprise);
+            $em->flush();
+
+            // rediriger avec le parametre id de lentreprise
+            return $this->redirectToRoute("entrepriseFiche", ['id' => $idEntreprise]);
+
         }
+
+        return $this->render('entreprises/entrepriseNote.html.twig', 
+        [
+            'formulaireNote' => $formulaireNote->createView(),
+            'entreprise' => $entreprise
+        ]);
     }
 
 }
