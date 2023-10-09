@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Avis;
 use App\Entity\Entreprise;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EntrepriseController extends AbstractController
 {
@@ -23,7 +25,6 @@ class EntrepriseController extends AbstractController
         return $this->render("entreprises/entreprises_liste.html.twig", $vars);
     }
 
-    // A REVOIR POUR LE SELECT 
     //Chemin vers fiche entreprise individuelle
     #[Route('/entreprise/fiche/{id}', name: 'entrepriseFiche')]
     public function ficheEntreprise(
@@ -39,8 +40,10 @@ class EntrepriseController extends AbstractController
 
         $query = $em->createQuery("SELECT avg(cotations.note) FROM App\Entity\Entreprise entreprise
                                     JOIN entreprise.cotations cotations WHERE entreprise = :entreprise");
+        
         $query->setParameter('entreprise', $entreprise);
         $res = $query->getResult();
+        
         //  dd($res);
         
         $noteMoyenne = null;
@@ -55,4 +58,18 @@ class EntrepriseController extends AbstractController
 
         return $this->render("entreprises/ficheEntreprise.html.twig", $vars);
     }
+
+    //Noter une Entreprise précise
+    #[Route('/entreprise/note/{id}', name: 'entrepriseNote')]
+    public function noterEntreprise(Request $request, ManagerRegistry $doctrine)
+    {
+        $avisEntreprise = new Avis();
+        $formulaireNote = $this->createForm(Avis::class, $avisEntreprise);
+        $formulaireNote->handleRequest($request);
+
+        if ($formulaireNote->isSubmitted() && $formulaireNote->isValid()){
+            
+        }
+    }
+
 }

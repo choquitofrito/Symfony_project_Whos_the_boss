@@ -27,11 +27,10 @@
 						<p class="card-text">Secteur :
 							<b>{{ entreprise.secteur }}</b>
 							<br><a href="{{ path ('entrepriseFiche', {'id': entreprise.id} ) }}" class="btn btn-primary">En savoir plus</a>
-							<a href="#" class="btn btn-primary">Donner une note</a>
+							<a href="{{ path ('entrepriseNote', {'id': entreprise.id} ) }}" class="btn btn-primary">Donner une note</a>
 					</div>
 				</div>
 			</div>
-			{# {{ dump (entreprise.cotations | length )}} #}
 		{% endfor %}
 
 	</div>
