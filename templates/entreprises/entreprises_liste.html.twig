@@ -1,14 +1,20 @@
 {% extends "base.html.twig" %}
 
+{% block title %}
+	Cherchez, créez, notez votre entreprise
+{% endblock %}
+
 {% block body %}
+
 	<h1>Cherchez, créez, notez votre entreprise</h1>
 
 	<hr>
 	{# NAVBAR ICI #}
 	<hr>
 
-	{% for entreprise in entrepriseListe %}
-		<div class="row row-cols-1 row-cols-md-3 g-4">
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+
+		{% for entreprise in entrepriseListe %}
 			<div class="col">
 				<div class="card h-100">
 					<a href={{ path ('entreprises', {'id': entreprise.id} ) }}>
@@ -18,13 +24,16 @@
 						<h5 class="card-title">
 							<b>{{ entreprise.nom }}</b>
 						</h5>
-						<p class="card-text">Secteur : <b>{{ entreprise.secteur }}</b>
-							<br>
-							{{ entreprise.description }}</p>
+						<p class="card-text">Secteur :
+							<b>{{ entreprise.secteur }}</b>
+							<br><a href="{{ path ('entrepriseFiche', {'id': entreprise.id} ) }}" class="btn btn-primary">En savoir plus</a>
+							<a href="#" class="btn btn-primary">Donner une note</a>
 					</div>
 				</div>
 			</div>
-		</div>
-	{% endfor %}
+			{# {{ dump (entreprise.cotations | length )}} #}
+		{% endfor %}
+
+	</div>
 
 {% endblock %}

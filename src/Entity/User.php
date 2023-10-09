@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cotation::class)]
-    private Collection $cotation;
+    private Collection $cotations;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Avis::class)]
     private Collection $avis;
@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct(array $init)
     {
         $this->hydrate($init);
-        $this->cotation = new ArrayCollection();
+        $this->cotations = new ArrayCollection();
         $this->avis = new ArrayCollection();
     }
 
@@ -145,15 +145,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Cotation>
      */
-    public function getCotation(): Collection
+    public function getCotations(): Collection
     {
-        return $this->cotation;
+        return $this->cotations;
     }
 
     public function addCotation(Cotation $cotation): static
     {
-        if (!$this->cotation->contains($cotation)) {
-            $this->cotation->add($cotation);
+        if (!$this->cotations->contains($cotation)) {
+            $this->cotations->add($cotation);
             $cotation->setUser($this);
         }
 
@@ -162,7 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeCotation(Cotation $cotation): static
     {
-        if ($this->cotation->removeElement($cotation)) {
+        if ($this->cotations->removeElement($cotation)) {
             // set the owning side to null (unless already changed)
             if ($cotation->getUser() === $this) {
                 $cotation->setUser(null);

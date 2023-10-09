@@ -19,11 +19,11 @@ class Critere
     private ?string $questioncritere = null;
 
     #[ORM\ManyToMany(targetEntity: Cotation::class, inversedBy: 'criteres')]
-    private Collection $cotation;
+    private Collection $cotations;
 
     public function __construct()
     {
-        $this->cotation = new ArrayCollection();
+        $this->cotations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,15 +46,15 @@ class Critere
     /**
      * @return Collection<int, Cotation>
      */
-    public function getCotation(): Collection
+    public function getCotations(): Collection
     {
-        return $this->cotation;
+        return $this->cotations;
     }
 
     public function addCotation(Cotation $cotation): static
     {
-        if (!$this->cotation->contains($cotation)) {
-            $this->cotation->add($cotation);
+        if (!$this->cotations->contains($cotation)) {
+            $this->cotations->add($cotation);
         }
 
         return $this;
@@ -62,7 +62,7 @@ class Critere
 
     public function removeCotation(Cotation $cotation): static
     {
-        $this->cotation->removeElement($cotation);
+        $this->cotations->removeElement($cotation);
 
         return $this;
     }

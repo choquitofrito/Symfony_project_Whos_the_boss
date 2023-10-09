@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Noter une Entreprise
+{% endblock %}
+
+{% block body %}
+
+	{# {% for entreprise in entrepriseFiche %}
+
+		<a href={{ path ('entreprises', {'id': entreprise.id} ) }}>
+			<img src="{{ asset (entreprise.image) }}" class="card-img-top" alt="logo entreprise">
+		</a>
+
+		<h3>
+			<b>{{ entreprise.nom }}</b>
+		</h3>
+
+		<br>Secteur : 
+		{{ entreprise.secteur }}
+		<p>{{ entreprise.description }}</p>
+
+        <br>Note : {{ entreprise.cotation.note }}/5
+        
+        <br>{{ entreprise.avis }}
+        <hr> #}
+
+
+
+	<img src="{{ asset (entreprise.image) }}" class="card-img-top" alt="logo entreprise">
+
+    <h3><b>{{ entreprise.nom }}</h3>
+
+	<br>Secteur : {{ entreprise.secteur }}
+	<p>{{ entreprise.description }}</p>
+
+	
+    {% if entreprise.cotations is not empty %}
+      
+		Note moyenne: {{ noteMoyenne }}<br>
+	
+    {% else %}
+        Pas de cotations.
+    {% endif %}
+
+
+	{# {% endfor %} #}
+
+{% endblock %}
