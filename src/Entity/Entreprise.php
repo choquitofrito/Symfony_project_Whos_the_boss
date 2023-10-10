@@ -179,4 +179,26 @@ class Entreprise
 
         return $this;
     }
+
+    public function addAvi(Avis $avi): static
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis->add($avi);
+            $avi->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): static
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getEntreprise() === $this) {
+                $avi->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -27,6 +27,9 @@ class Avis
     #[ORM\ManyToOne(inversedBy: 'avis')]
     private ?Entreprise $entreprise = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateFin = null;
+
         //constructeur et hydrate
 
         public function hydrate (array $vals){
@@ -95,6 +98,18 @@ class Avis
     public function setEntreprise(?Entreprise $entreprise): static
     {
         $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(\DateTimeInterface $dateFin): static
+    {
+        $this->dateFin = $dateFin;
 
         return $this;
     }

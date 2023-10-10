@@ -15,7 +15,7 @@ class AvisType extends AbstractType
     {
         $builder
             ->add('commentaire', TextType::class)
-            ->add('dateDebut', DateType::class)
+            ->add('date', DateType::class)
             ->add('dateFin', DateType::class)
         ;
     }

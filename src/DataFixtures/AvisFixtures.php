@@ -35,6 +35,7 @@ class AvisFixtures extends Fixture implements DependentFixtureInterface
             $avis = new Avis([
                 'commentaire' => $commentaire,
                 'date' => $date,
+                'datefin' => $date,
 
             ]);
 

@@ -41,6 +41,7 @@ class Cotation
     public function __construct(array $init)
     {
         $this->hydrate($init);
+        $this->criteres = new ArrayCollection();
 
 
     }
