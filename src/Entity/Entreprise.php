@@ -47,7 +47,7 @@ class Entreprise
             }
         }
         
-        public function __construct(array $init)
+        public function __construct(array $init=[])
         {
             $this->hydrate($init);
             $this->cotations = new ArrayCollection();

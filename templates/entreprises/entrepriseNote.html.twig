@@ -1,13 +1,24 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	Laisser un Avis {{entreprise.nom}}
+	Laisser un Avis
 {% endblock %}
 
 {% block body %}
 
+<h1>Laisser un Avis</h1>
+<h3 align=center>{{entreprise.nom}}</h3>
+
+<hr>
+
   {{ form_start(formulaireNote) }}
+
+  {# <label for="name">Commentaire : </label>
+  <input type="text" id="name" name="name" required minlength="4" maxlength="5000" size="500" /> #}
+  
+  {{form_widget(formulaireNote)}}
   <input type="submit">
+
   {{ form_end(formulaireNote) }}
 
 

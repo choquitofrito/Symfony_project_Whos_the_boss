@@ -2,28 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Avis;
+use App\Entity\Entreprise;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class AvisType extends AbstractType
+class CreationEntrepriseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('commentaire', TextType::class)
-            ->add('dateDebut', DateType::class)
-            ->add('dateFin', DateType::class)
+            ->add('nom')
+            ->add('secteur')
+            ->add('emplacement')
+            ->add('image')
+            ->add('description')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Avis::class,
+            'data_class' => Entreprise::class,
         ]);
     }
 }
