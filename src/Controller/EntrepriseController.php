@@ -3,15 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Avis;
-use App\Entity\Entreprise;
+use App\Entity\Cotation;
 use App\Form\AvisType;
-use App\Form\CreationEntrepriseType;
+use App\Entity\Critere;
+use App\Entity\Entreprise;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 class EntrepriseController extends AbstractController
 {
@@ -62,19 +62,65 @@ class EntrepriseController extends AbstractController
         return $this->render("entreprises/ficheEntreprise.html.twig", $vars);
     }
 
-    //Noter une Entreprise précise
+    // CE CODE FONCTIONNE MAIS JE VEUX AJOUTER FORMULAIRE CRITERETYPE + NOTES RELIEES
+    // //Noter une Entreprise précise
+    // #[Route('/entreprise/note/{id}', name: 'entrepriseNote')]
+    // public function noterEntreprise(Request $request, ManagerRegistry $doctrine)
+    // {
+    //     $avisEntreprise = new Avis();
+    //     $formulaireNote = $this->createForm(AvisType::class, $avisEntreprise);
+    //     $formulaireNote->handleRequest($request);
+
+    //     // obtenir l'User et l'Entreprise
+    //     $idEntreprise = $request->get('id');
+    //     $em = $doctrine->getManager();
+
+    //     $rep = $em->getRepository(Entreprise::class);
+    //     $entreprise = $rep->find($idEntreprise);
+
+
+    //     $user = $this->getUser();
+        
+    //     if ($formulaireNote->isSubmitted() && $formulaireNote->isValid()){
+
+    //         // fixer User et Entreprise
+    //         $avisEntreprise->setUser($user);
+    //         $avisEntreprise->setEntreprise($entreprise);
+
+    //         // stocker l'avis complet
+    //         $em->persist($avisEntreprise);
+    //         $em->flush();
+
+    //         // rediriger avec le parametre id de lentreprise
+    //         return $this->redirectToRoute("entrepriseFiche", ['id' => $idEntreprise]);
+
+    //     }
+
+    //     return $this->render('entreprises/entrepriseNote.html.twig', 
+    //     [
+    //         'formulaireNote' => $formulaireNote->createView(),
+    //         'entreprise' => $entreprise
+    //     ]);
+    // }
+
+    //Répondre aux questioncritere (entity Critere) par des notes de 0 à 5 (entity Cotation)  
     #[Route('/entreprise/note/{id}', name: 'entrepriseNote')]
-    public function noterEntreprise(Request $request, ManagerRegistry $doctrine)
+    public function critereEntreprise(Request $request, ManagerRegistry $doctrine)
     {
         $avisEntreprise = new Avis();
         $formulaireNote = $this->createForm(AvisType::class, $avisEntreprise);
         $formulaireNote->handleRequest($request);
 
         // obtenir l'User et l'Entreprise
-        $idEntreprise = $request->get('id');
+        $id = $request->get('id');
         $em = $doctrine->getManager();
+
         $rep = $em->getRepository(Entreprise::class);
-        $entreprise = $rep->find($idEntreprise);
+        $entreprise = $rep->find($id);
+
+        $rep2 = $em->getRepository(Cotation::class);
+        $cotation = $rep2->find($id);
+
 
         $user = $this->getUser();
         
@@ -83,72 +129,23 @@ class EntrepriseController extends AbstractController
             // fixer User et Entreprise
             $avisEntreprise->setUser($user);
             $avisEntreprise->setEntreprise($entreprise);
+            //
+            $avisEntreprise->setNote($cotation);
 
             // stocker l'avis complet
             $em->persist($avisEntreprise);
             $em->flush();
 
             // rediriger avec le parametre id de lentreprise
-            return $this->redirectToRoute("entrepriseFiche", ['id' => $idEntreprise]);
+            return $this->redirectToRoute("entrepriseFiche", ['id' => $id]);
 
         }
 
         return $this->render('entreprises/entrepriseNote.html.twig', 
         [
             'formulaireNote' => $formulaireNote->createView(),
-            'entreprise' => $entreprise
+            'entreprise' => $entreprise,
+            'cotation' => $cotation
         ]);
-    }
-}
-
-//Upload image par l'User -> BD (logo de l'entreprise)
-class UploadHelper
-
-{
-    public function __construct (private string $dossierUpload){
-        $this->dossierUpload = $dossierUpload;
-    }
-
-    public function uploadLogoEntreprise(UploadedFile $fichier): string
-    {
-
-        // obtenir un nom de fichier unique pour éviter les doublons dans le dossierUpload
-        $nomFichierServeur = md5(uniqid()) . "." . $fichier->guessExtension();
-        // stocker le fichier dans le serveur (on peut préciser encore plus le dossier)
-        $fichier->move($this->dossierUpload . "/logo", $nomFichierServeur);
-        return $nomFichierServeur;
-    }
-
-
-    #[Route("/entreprise/creation", name:"creationEntreprise")]
-    public function upload (Request $req, ManagerRegistry $doctrine)
-    {
-        $entreprise = new Entreprise();
-        $formCreationEntreprise = $this->createForm(CreationEntrepriseType::class, $entreprise);
-        $formCreationEntreprise->handleRequest($req);
-
-        if ($formCreationEntreprise->isSubmitted() && $formCreationEntreprise->isValid()) 
-        {
-            $fichier = $formCreationEntreprise['image']->getData();
-            $dossier = $this->getParameter('kernel.project_dir').'/public/dossierLogos';
-        
-            if ($fichier) {
-                $nomFichierServeur = md5(uniqid()) . "." . $fichier->guessExtension();
-                $fichier->move($dossier,$nomFichierServeur);
-                $entreprise->setImage($nomFichierServeur);
-            }
-
-            $em = $doctrine->getManager();
-            $em->persist($entreprise);
-            $em->flush();
-
-            return new Response ("Le fichier à bien été ajouté.");
-        }
-
-        else{
-            return $this->render("/entreprises/creation.html.twig",
-            ['formulaireCreation' => $formCreationEntreprise]
-        );
-        }
     }
 }

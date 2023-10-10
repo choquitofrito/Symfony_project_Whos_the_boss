@@ -4,12 +4,21 @@
 
 	<h1>Créer une entreprise</h1>
     
-{{ form_start(formulaireCreation) }}
 
-<input type="upload">
-<input type="submit">
+{{ form_start(formCreationEntreprise) }}
 
-{{ form_end(formulaireCreation) }}
+
+	<div class='secteur-container'>
+        <span>Secteur d'Activité </span>
+        {{ form_row(formCreationEntreprise.secteur)}}
+		
+		<select name="secteur" size=1 multiple>
+		{% for secteur in arraySecteur %}
+				<option value="0">{{ formCreationEntreprise.secteur }}</option>
+		{% endfor %}
+    </div>
+
+{{ form_end(formCreationEntreprise) }}
 
 	
 {% endblock %}

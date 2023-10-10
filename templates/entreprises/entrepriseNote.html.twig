@@ -8,16 +8,17 @@
 
 <h1>Laisser un Avis</h1>
 <h3 align=center>{{entreprise.nom}}</h3>
+Note actuelle: {{cotation.note}}
 
 <hr>
 
-  {{ form_start(formulaireNote) }}
-  
-  {{form_widget(formulaireNote)}}
 
-  <input type="submit">
+{{ form_start(formulaireNote) }}
 
-  {{ form_end(formulaireNote) }}
+{{form_widget(formulaireNote)}}
+<input type="submit">
+
+{{ form_end(formulaireNote) }}
 
 
 {% endblock %}

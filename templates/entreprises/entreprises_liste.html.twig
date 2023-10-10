@@ -17,7 +17,7 @@
 		{% for entreprise in entrepriseListe %}
 			<div class="col">
 				<div class="card h-100">
-					<a href={{ path ('entreprises', {'id': entreprise.id} ) }}>
+					<a href={{ path ('entrepriseFiche', {'id': entreprise.id} ) }}>
 						<img src="{{ asset (entreprise.image) }}" class="card-img-top" alt="logo entreprise">
 					</a>
 					<div class="card-body">
