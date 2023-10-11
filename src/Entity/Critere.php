@@ -18,9 +18,10 @@ class Critere
     #[ORM\Column(length: 800)]
     private ?string $questioncritere = null;
 
-    #[ORM\ManyToMany(targetEntity: Cotation::class, inversedBy: 'criteres')]
+    #[ORM\OneToMany(mappedBy: 'critere', targetEntity: Cotation::class)]
     private Collection $cotations;
 
+    
     public function __construct()
     {
         $this->cotations = new ArrayCollection();
@@ -55,6 +56,7 @@ class Critere
     {
         if (!$this->cotations->contains($cotation)) {
             $this->cotations->add($cotation);
+            $cotation->setCritere($this);
         }
 
         return $this;
@@ -62,8 +64,14 @@ class Critere
 
     public function removeCotation(Cotation $cotation): static
     {
-        $this->cotations->removeElement($cotation);
+        if ($this->cotations->removeElement($cotation)) {
+            // set the owning side to null (unless already changed)
+            if ($cotation->getCritere() === $this) {
+                $cotation->setCritere(null);
+            }
+        }
 
         return $this;
     }
+
 }

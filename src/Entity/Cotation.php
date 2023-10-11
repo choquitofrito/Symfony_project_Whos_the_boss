@@ -27,14 +27,16 @@ class Cotation
     #[ORM\JoinColumn(nullable: false)]
     private ?Entreprise $entreprise = null;
 
-    #[ORM\ManyToMany(targetEntity: Critere::class, mappedBy: 'cotation')]
-    private Collection $criteres;
+ 
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateCotation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'cotations')]
+    private ?Critere $critere = null;
 
     public function hydrate (array $vals){
         foreach ($vals as $cle => $valeur){
@@ -48,7 +50,6 @@ class Cotation
     public function __construct(array $init)
     {
         $this->hydrate($init);
-        $this->criteres = new ArrayCollection();
 
 
     }
@@ -94,32 +95,6 @@ class Cotation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Critere>
-     */
-    public function getCriteres(): Collection
-    {
-        return $this->criteres;
-    }
-
-    public function addCritere(Critere $critere): static
-    {
-        if (!$this->criteres->contains($critere)) {
-            $this->criteres->add($critere);
-            $critere->addCotation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCritere(Critere $critere): static
-    {
-        if ($this->criteres->removeElement($critere)) {
-            $critere->removeCotation($this);
-        }
-
-        return $this;
-    }
 
     public function getCommentaire(): ?string
     {
@@ -141,6 +116,18 @@ class Cotation
     public function setDateCotation(?\DateTimeInterface $dateCotation): static
     {
         $this->dateCotation = $dateCotation;
+
+        return $this;
+    }
+
+    public function getCritere(): ?Critere
+    {
+        return $this->critere;
+    }
+
+    public function setCritere(?Critere $critere): static
+    {
+        $this->critere = $critere;
 
         return $this;
     }
