@@ -33,6 +33,9 @@ class Cotation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateCotation = null;
+
     public function hydrate (array $vals){
         foreach ($vals as $cle => $valeur){
             if (isset ($vals[$cle])){
@@ -126,6 +129,18 @@ class Cotation
     public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getDateCotation(): ?\DateTimeInterface
+    {
+        return $this->dateCotation;
+    }
+
+    public function setDateCotation(?\DateTimeInterface $dateCotation): static
+    {
+        $this->dateCotation = $dateCotation;
 
         return $this;
     }

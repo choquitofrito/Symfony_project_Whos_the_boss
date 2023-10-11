@@ -42,6 +42,7 @@ implements DependentFixtureInterface
             $cotation = new Cotation([
                 'note' => $randomNote,
                 'commentaire' => $faker->text(),
+                'dateCotation' => $faker->dateTime()
             ]);
 
             $manager->persist($cotation);
