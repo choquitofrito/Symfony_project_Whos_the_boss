@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CotationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CotationRepository::class)]
@@ -28,6 +29,9 @@ class Cotation
 
     #[ORM\ManyToMany(targetEntity: Critere::class, mappedBy: 'cotation')]
     private Collection $criteres;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $commentaire = null;
 
     public function hydrate (array $vals){
         foreach ($vals as $cle => $valeur){
@@ -110,6 +114,18 @@ class Cotation
         if ($this->criteres->removeElement($critere)) {
             $critere->removeCotation($this);
         }
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): static
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }
