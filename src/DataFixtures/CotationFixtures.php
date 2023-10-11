@@ -2,20 +2,24 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Critere;
 use App\Entity\Cotation;
-use App\Entity\Entreprise;
 
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use App\Entity\Entreprise;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class CotationFixtures extends Fixture
 implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+
+
+        $faker = Factory::create();
 
         $repCriteres = $manager->getRepository(Critere::class);
         $arrayCriteres = $repCriteres->findAll();
@@ -37,6 +41,7 @@ implements DependentFixtureInterface
 
             $cotation = new Cotation([
                 'note' => $randomNote,
+                'commentaire' => $faker->text(),
             ]);
 
             $manager->persist($cotation);
