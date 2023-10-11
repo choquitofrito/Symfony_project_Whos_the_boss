@@ -1,0 +1,68 @@
+{# templates/cotation/create.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Cotations{% endblock %}
+
+{% block body %}
+    <h1>Cotations pour {{ entreprise.nom }}</h1>
+
+    {# Div qui contient les forms  #}
+    {# Attention à comment on incruste l'id de l'entreprise quelque part (ici dans le form global) 
+    car l'action pour sauver en aura besoin #}
+    <div id="div_cotations" data-entreprise ={{ entreprise.id }}>
+        {% for form in forms %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {# ATTENTION à comment on a rajouté une classe "enregistrement"pour pouvoir les accéder plus tard avec du JS #}
+            <button class="enregistrement btn btn-primary">Enregistrer</button>
+            {{ form_end(form) }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {# Axios  #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js" integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {# Gestion des submit des forms #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const div_cotations = document.getElementById('div_cotations');
+
+            // rajouter le click à chaque bouton (on leur a donnée une classe plus haut)
+            let forms = document.getElementsByClassName ('form-cotation');
+            
+            Array.from(forms).forEach ( function (form){
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    // il faut cibler le formulaire qui contient le bouton cliqué
+                    console.log (form);
+
+                    // on créer le FormData à partir de ce form
+                    const formData = new FormData(form);
+                    
+                    // rajouter les ids au POST du formulaire pour ne pas devoir manipuler l'url
+                    formData.append ('entreprise', div_cotations.dataset.entreprise); // pareil pour tous les critéres, on le met dans le div ici dans la vue
+                    formData.append ('critere', event.target.dataset.critere); // différent dans chaque form, incrusté dans le controller
+
+
+                    axios.post('/cotation/enregistrer', formData)
+                        .then(response => {
+                            // Tout ok... faire quoi qui ce soit
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            // Erreur
+                            console.error(error);
+                        });
+                });
+            });
+
+
+
+            
+        });
+    </script>
+{% endblock %}

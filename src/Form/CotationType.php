@@ -15,8 +15,7 @@ class CotationType extends AbstractType
             ->add('note')
             ->add('commentaire')
             ->add('dateCotation')
-            // ->add('user')
-            // ->add('entreprise')
+            // pas des champs de liason
         ;
     }
 
