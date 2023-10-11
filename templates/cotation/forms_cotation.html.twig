@@ -51,6 +51,7 @@
                     axios.post('/cotation/enregistrer', formData)
                         .then(response => {
                             // Tout ok... faire quoi qui ce soit
+                            alert ("enregistrement ok"); // changer ici quelque chose dans le DOM et enlever cet alert
                             console.log(response.data);
                         })
                         .catch(error => {
