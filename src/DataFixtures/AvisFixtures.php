@@ -17,36 +17,36 @@ class AvisFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
 
-        $users = $manager->getRepository(User::class)->findAll();
-        $entreprises = $manager->getRepository(Entreprise::class)->findAll();
+        // $users = $manager->getRepository(User::class)->findAll();
+        // $entreprises = $manager->getRepository(Entreprise::class)->findAll();
 
-        $faker = Factory::create();
-
-
-
-        for ($i = 1; $i <= 10; $i++) {
-
-            $user = $users[array_rand($users)];
-            $entreprise = $entreprises[array_rand($entreprises)];
-
-            $commentaire = $faker->realText(800);
-            $date = $faker->dateTimeThisYear;
-
-            $avis = new Avis([
-                'commentaire' => $commentaire,
-                'date' => $date,
-                'datefin' => $date,
-
-            ]);
-
-            $user->addAvis($avis);
-            $entreprise->addAvis($avis);
-            $manager->persist($avis);
-        }
+        // $faker = Factory::create();
 
 
 
-        $manager->flush();
+        // for ($i = 1; $i <= 10; $i++) {
+
+        //     $user = $users[array_rand($users)];
+        //     $entreprise = $entreprises[array_rand($entreprises)];
+
+        //     $commentaire = $faker->realText(800);
+        //     $date = $faker->dateTimeThisYear;
+
+        //     $avis = new Avis([
+        //         'commentaire' => $commentaire,
+        //         'date' => $date,
+        //         'datefin' => $date,
+
+        //     ]);
+
+        //     $user->addAvis($avis);
+        //     $entreprise->addAvis($avis);
+        //     $manager->persist($avis);
+        // }
+
+
+
+        // $manager->flush();
     }
 
     public function getDependencies()

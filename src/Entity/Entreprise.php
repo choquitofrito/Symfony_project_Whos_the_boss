@@ -30,8 +30,8 @@ class Entreprise
     #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Cotation::class)]
     private Collection $cotations;
 
-    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Avis::class)]
-    private Collection $avis;
+    // #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Avis::class)]
+    // private Collection $avis;
 
     #[ORM\Column(length: 800)]
     private ?string $description = null;
@@ -138,35 +138,35 @@ class Entreprise
         return $this;
     }
 
-    /**
-     * @return Collection<int, Avis>
-     */
-    public function getAvis(): Collection
-    {
-        return $this->avis;
-    }
+    // /**
+    //  * @return Collection<int, Avis>
+    //  */
+    // public function getAvis(): Collection
+    // {
+    //     return $this->avis;
+    // }
 
-    public function addAvis(Avis $avis): static
-    {
-        if (!$this->avis->contains($avis)) {
-            $this->avis->add($avis);
-            $avis->setEntreprise($this);
-        }
+    // public function addAvis(Avis $avis): static
+    // {
+    //     if (!$this->avis->contains($avis)) {
+    //         $this->avis->add($avis);
+    //         $avis->setEntreprise($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeAvis(Avis $avis): static
-    {
-        if ($this->avis->removeElement($avis)) {
-            // set the owning side to null (unless already changed)
-            if ($avis->getEntreprise() === $this) {
-                $avis->setEntreprise(null);
-            }
-        }
+    // public function removeAvis(Avis $avis): static
+    // {
+    //     if ($this->avis->removeElement($avis)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($avis->getEntreprise() === $this) {
+    //             $avis->setEntreprise(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getDescription(): ?string
     {
