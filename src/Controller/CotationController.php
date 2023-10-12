@@ -45,6 +45,7 @@ class CotationController extends AbstractController
             // Pour chaque Critere dans cette Entreprise on stockera une cotation. 
             // L'user et l'entreprise sont déjà choisies quand on arrive à cette action alors en les fixe dans la Cotation 
             // Maintenant il manque juste que l'User remplisse les données de la cotation
+            // On peut cacher 
             $cotation = new Cotation();
             $cotation->setCritere($critere);
             $cotation->setEntreprise($entreprise);
@@ -78,15 +79,7 @@ class CotationController extends AbstractController
         ManagerRegistry $doctrine
     ) {
 
-        // Récupérez l'entité entreprise en fonction de l'id du POST 
-        $entrepriseId = $req->request->get('entreprise');
-        $entreprise = $entRep->find($entrepriseId);
-        // dd($entrepriseId);
-
-        // Récupérez le critére en fonction de l'id du POST
-        $critereId = $req->request->get('critere');
-        $critere = $entRep->find($critereId);
-
+        
         $cotation = new Cotation();
         $form = $this->createForm(
             CotationType::class,
@@ -94,16 +87,9 @@ class CotationController extends AbstractController
         );
 
         $form->handleRequest($req);
-
+        // dd ($cotation);
         
         $entityManager = $doctrine->getManager();
-        
-        $critere = $doctrine->getRepository(Critere::class)->find($critereId);
-
-        
-        $cotation->setEntreprise($entreprise);
-        $cotation->setCritere($critere);
-        $cotation->setUser($this->getUser());
         
         $entityManager->persist($cotation);
         //  dd($cotation);

@@ -31,7 +31,15 @@
                         }})
                      
             }}
-            {{ form_widget(form) }}
+            {{ form_row(form.note) }}
+            {{ form_row(form.commentaire) }}
+            {{ form_row(form.dateCotation) }}
+
+            {# IL FAUT cacher ces deux champs avec du CSS, mais ne les enleves pas car ils contiennent l'User et l'Entreprise.
+            Ce ne sont pas de champs pour sélectionner quoi qui ce soit mais pour fixer les infos qu'on a déjà #}
+            {{ form_row(form.entreprise) }}
+            {{ form_row(form.user) }}
+            {{ form_row(form.critere) }}
 
             <button class="enregistrement btn btn-primary">Enregistrer</button>
             {{ form_end(form) }}
@@ -58,12 +66,8 @@
                     event.preventDefault();
 
                     // on créer le FormData à partir de ce form
-                    const formData = new FormData(form);
+                    const formData = new FormData(form); // La cotation es complete, on peut l'enregistrer
                     
-                    // rajouter les ids (les IDs!) au POST du formulaire pour les envoyer à l'action d'enregistrement
-                    formData.append ('entreprise', div_cotations.dataset.entreprise); // pareil pour tous les critéres, on le met dans le div ici dans la vue
-                    formData.append ('critere', event.target.dataset.critere); // différent dans chaque form, incrusté dans le controller
-
                     axios.post('/cotation/enregistrer', formData)
                         .then(response => {
                             // Tout ok... faire quoi qui ce soit
