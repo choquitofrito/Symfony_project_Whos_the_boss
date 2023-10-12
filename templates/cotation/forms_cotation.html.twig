@@ -7,14 +7,32 @@
 {% block body %}
     <h1>Cotations pour {{ entreprise.nom }}</h1>
 
-    {# Div qui contient les forms  #}
-    {# Attention à comment on incruste l'id de l'entreprise quelque part (ici dans le form global) 
-    car l'action pour sauver en aura besoin #}
+    {# Div qui contient les forms, un pour chaque Critere  #}
     <div id="div_cotations" data-entreprise ={{ entreprise.id }}>
+        
         {% for form in forms %}
-            {{ form_start(form) }}
+
+            {# On veut afficher la question du critére et la façon la plus simple est d'obtenir l'entité associée au form
+            Dans le controller on avait déjà fixé le Critere et l'User, on n'a pas vu ça en cours #}
+            {% set cotation = form.vars.data %} 
+            
+            <h4>Critére: {{ cotation.critere.questioncritere }}</h4>
+
+            {# on rajoute des attributs quand on crée le formulaire. On peut le faire dans le controller ou dans la vue.
+            Dans ce cas on le fait dans la vue: 
+            On a besoin de rajouter une class et incruster l'id du Critére dans chaque form
+            pour l'obtenir avec du JS et l'utiliser dans l'appel AXIOS de l'action qui enregistrera la Cotation 
+            Vous pouvez les voir, inspectez le DOM (balise form) pour les voir! #}
+
+            {{ form_start(form, 
+                        {'attr' : {    
+                            'class': 'form-cotation', 
+                            'data-critere': cotation.critere.id  
+                        }})
+                     
+            }}
             {{ form_widget(form) }}
-            {# ATTENTION à comment on a rajouté une classe "enregistrement"pour pouvoir les accéder plus tard avec du JS #}
+
             <button class="enregistrement btn btn-primary">Enregistrer</button>
             {{ form_end(form) }}
         {% endfor %}
@@ -30,23 +48,21 @@
         document.addEventListener('DOMContentLoaded', function() {
             const div_cotations = document.getElementById('div_cotations');
 
-            // rajouter le click à chaque bouton (on leur a donnée une classe plus haut)
+            // Obtenir tous les formulaires
             let forms = document.getElementsByClassName ('form-cotation');
             
+            // Fixer quoi faire dans le submit: appel axios pour envoyer et enregistrer la Cotation
             Array.from(forms).forEach ( function (form){
+
                 form.addEventListener('submit', function(event) {
                     event.preventDefault();
-
-                    // il faut cibler le formulaire qui contient le bouton cliqué
-                    console.log (form);
 
                     // on créer le FormData à partir de ce form
                     const formData = new FormData(form);
                     
-                    // rajouter les ids au POST du formulaire pour ne pas devoir manipuler l'url
+                    // rajouter les ids (les IDs!) au POST du formulaire pour les envoyer à l'action d'enregistrement
                     formData.append ('entreprise', div_cotations.dataset.entreprise); // pareil pour tous les critéres, on le met dans le div ici dans la vue
                     formData.append ('critere', event.target.dataset.critere); // différent dans chaque form, incrusté dans le controller
-
 
                     axios.post('/cotation/enregistrer', formData)
                         .then(response => {
